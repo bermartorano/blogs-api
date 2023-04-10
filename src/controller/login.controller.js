@@ -7,9 +7,9 @@ const signIn = async (req, res) => {
     return res.status(login.status).json(login.response);
   } catch (error) {
     return res.status(500).json({ message: error.message });
-  };
+  }
 };
 
 module.exports = {
-  signIn
+  signIn,
 };

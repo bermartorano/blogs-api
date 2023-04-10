@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+
 const secretKey = process.env.JWT_SECRET;
 const configJWT = { algorithm: 'HS256' };
 
@@ -8,5 +9,5 @@ const newToken = (payload) => {
 };
 
 module.exports = {
-  newToken
+  newToken,
 };
