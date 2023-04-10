@@ -1,14 +1,14 @@
 const { User } = require('../models');
+const { newToken } = require('../utils/auth');
 
 const signIn = async (email) => {
   const users = await User.findOne({
     where: { email }
   });
-  console.log('User achado na service: ', users);
-
   if(!users) return { status: 400, response: { message: "Invalid fields" } };
-
-  return users;
+  const token = newToken(email);
+  const response = { status: 200, response: { token }};
+  return response;
 };
 
 module.exports = {
