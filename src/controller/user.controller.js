@@ -13,6 +13,16 @@ const postUser = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await userServices.getAllUsers();
+    return res.status(200).json(allUsers);
+  } catch (error) {
+
+  }
+};
+
 module.exports = {
   postUser,
+  getAllUsers,
 };

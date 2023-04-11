@@ -8,6 +8,12 @@ const postUser = async (user) => {
   return result;
 };
 
+const getAllUsers = async () => {
+  const allUSers = await User.findAll();
+  return allUSers;
+};
+
 module.exports = {
   postUser,
+  getAllUsers,
 };

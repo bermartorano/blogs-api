@@ -10,4 +10,6 @@ userRouter.post(
   userController.postUser,
   );
 
+userRouter.get('/user', userController.getAllUsers);
+
 module.exports = userRouter;
