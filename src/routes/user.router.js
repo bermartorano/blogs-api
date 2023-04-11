@@ -9,7 +9,8 @@ userRouter.post(
   md.validPassword,
   userController.postUser,
   );
-
 userRouter.get('/user', md.tokenValidation, userController.getAllUsers);
+// userRouter.get('/user/:id', md.tokenValidation, userController.getOneUser);
+userRouter.get('/user/:id', userController.getOneUser);
 
 module.exports = userRouter;

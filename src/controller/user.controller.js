@@ -13,7 +13,7 @@ const postUser = async (req, res) => {
   }
 };
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (_req, res) => {
   try {
     const allUsers = await userServices.getAllUsers();
     return res.status(200).json(allUsers);
@@ -22,7 +22,18 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const getOneUser = async (req, res) => {
+  try {
+    const { params: { id } } = req;
+    const user = await userServices.getOneUser(id);
+    return res.status(user.status).json(user.info);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
 module.exports = {
   postUser,
   getAllUsers,
+  getOneUser,
 };
