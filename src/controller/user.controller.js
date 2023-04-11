@@ -6,7 +6,6 @@ const postUser = async (req, res) => {
     const postUserReturn = await userServices.postUser(body);
     return res.status(postUserReturn.status).json(postUserReturn.info);
   } catch (error) {
-    // console.log('TESTE: ', error.name);
     if (error.name === 'SequelizeUniqueConstraintError') {
       return res.status(409).json({ message: 'User already registered' });
     }
