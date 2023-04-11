@@ -23,7 +23,7 @@ const getOneUser = async (id) => {
     where: { id },
   });
   if (!user) return { status: 404, info: { message: 'User does not exist' } };
-  return { status: 200, info: deletePassword(user.dataValues)};
+  return { status: 200, info: deletePassword(user.dataValues) };
 };
 
 module.exports = {
