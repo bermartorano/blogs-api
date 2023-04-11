@@ -6,6 +6,12 @@ const postCategory = async (nameObj) => {
   return result;
 };
 
+const getAllCategories = async () => {
+  const queryResult = await Category.findAll();
+  return queryResult;
+};
+
 module.exports = {
   postCategory,
+  getAllCategories,
 };
