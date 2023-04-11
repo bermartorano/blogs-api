@@ -32,7 +32,8 @@ const validEmail = (req, res, next) => {
 const validPassword = (req, res, next) => {
   const { body: { password } } = req;
   if (password.length < 6) {
-    res.status(400).json({ message: '"password" length must be at least 6 characters long' });
+    const message = '"password" length must be at least 6 characters long';
+    return res.status(400).json({ message });
   }
   next();
 };

@@ -9,8 +9,13 @@ const postUser = async (user) => {
 };
 
 const getAllUsers = async () => {
-  const allUSers = await User.findAll();
-  return allUSers;
+  const allUsers = await User.findAll();
+  const allUsersWithoutPassword = allUsers.map((user) => {
+    const userCopy = { ...user.dataValues };
+    delete userCopy.password;
+    return userCopy;
+  });
+  return allUsersWithoutPassword;
 };
 
 module.exports = {
