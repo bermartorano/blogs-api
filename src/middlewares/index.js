@@ -11,9 +11,11 @@ const allFields = (req, res, next) => {
 
 const displayNameSize = (req, res, next) => {
   const { body: { displayName: dp } } = req;
-  if (dp.length < 8) return res.status(400).json({
-    message: '"displayName" length must be at least 8 characters long',
-  });
+  if (dp.length < 8) {
+    return res.status(400).json({
+      message: '"displayName" length must be at least 8 characters long',
+    });
+  }
   return next();
 };
 
@@ -27,8 +29,17 @@ const validEmail = (req, res, next) => {
   return next();
 };
 
+const validPassword = (req, res, next) => {
+  const { body: { password } } = req;
+  if (password.length < 6) {
+    res.status(400).json({ message: '"password" length must be at least 6 characters long' });
+  }
+  next();
+};
+
 module.exports = {
   allFields,
   displayNameSize,
   validEmail,
+  validPassword,
 };
