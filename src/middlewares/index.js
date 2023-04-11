@@ -1,3 +1,5 @@
+const auth = require('../utils/auth');
+
 const allFields = (req, res, next) => {
   const message = 'Some required fields are missing';
   try {
@@ -35,7 +37,18 @@ const validPassword = (req, res, next) => {
     const message = '"password" length must be at least 6 characters long';
     return res.status(400).json({ message });
   }
-  next();
+  return next();
+};
+
+const tokenValidation = (req, res, next) => {
+  const { headers: { authorization } } = req;
+  if (!authorization) return res.status(401).json({ message: 'Token not found' });
+  try {
+    auth.validateToken(authorization);
+  } catch (error) {
+    return res.status(401).json({ message: 'Expired or invalid token' });
+  }
+  return next();
 };
 
 module.exports = {
@@ -43,4 +56,5 @@ module.exports = {
   displayNameSize,
   validEmail,
   validPassword,
+  tokenValidation,
 };
