@@ -57,6 +57,17 @@ const validateName = (req, res, next) => {
   next();
 };
 
+const allFieldsPostBlogPost = (req, res, next) => {
+  const message = 'Some required fields are missing';
+  try {
+    const { body: { title, content, categoryIds } } = req;
+    if (!title || !content || categoryIds.length === 0) return res.status(400).json({ message });
+  } catch (error) {
+    return res.status(400).json({ message });
+  }
+  return next();
+};
+
 module.exports = {
   allFields,
   displayNameSize,
@@ -64,4 +75,5 @@ module.exports = {
   validPassword,
   tokenValidation,
   validateName,
+  allFieldsPostBlogPost,
 };
