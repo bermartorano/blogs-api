@@ -10,6 +10,5 @@ categoryRouter.post(
 );
 
 categoryRouter.get('/categories', md.tokenValidation, categoryController.getAllCategories);
-// categoryRouter.get('/categories', categoryController.getAllCategories);
 
 module.exports = categoryRouter;

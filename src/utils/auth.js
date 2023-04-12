@@ -13,7 +13,13 @@ const validateToken = (token) => {
   return isTokenValid;  
 };
 
+const decodeToken = (token) => {
+  const decodedToken = jwt.decode(token, secretKey);
+  return decodedToken;
+}
+
 module.exports = {
   newToken,
   validateToken,
+  decodeToken,
 };
