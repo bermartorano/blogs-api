@@ -6,10 +6,10 @@ const postBlogPost = async (req, res) => {
     const postBlogPostReturn = await postService.postBlogPost(body, authorization);
     return res.status(201).json(postBlogPostReturn);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
   }
 };
 
 module.exports = {
   postBlogPost,
-}
+};

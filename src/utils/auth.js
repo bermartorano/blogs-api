@@ -16,7 +16,7 @@ const validateToken = (token) => {
 const decodeToken = (token) => {
   const decodedToken = jwt.decode(token, secretKey);
   return decodedToken;
-}
+};
 
 module.exports = {
   newToken,

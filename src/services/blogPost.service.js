@@ -1,11 +1,19 @@
-const { BlogPost, PostCategory } = require('../models');
+const { BlogPost, PostCategory, Category } = require('../models');
 const { decodeToken } = require('../utils/auth');
 
 const postBlogPost = async (post, token) => {
   const { title, content, categoryIds } = post;
   const { id: userId } = decodeToken(token);
+
+  const categories = await Category.findAll();
+  const allCategoriesExist = categories.every(({ dataValues: { id } }) => {
+    const idMatch = categoryIds.includes(id);
+    return idMatch;
+  });
+
+  if (!allCategoriesExist) throw new Error('one or more "categoryIds" not found');
+
   const blogPostReturn = await BlogPost.create({ title, content, userId });
-  console.log('RETORNO DO POST: ', blogPostReturn);
   
   const { dataValues: { id } } = blogPostReturn;
   const createInPostCategory = categoryIds.map((category) => {
