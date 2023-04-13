@@ -50,11 +50,7 @@ const getBlogPostById = async (id) => {
   const blogPostById = await BlogPost.findOne({
     where: { id },
     include: [
-      {
-        model: User,
-        as: 'user',
-        attributes: { exclude: ['password'] },
-      },
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
       {
         model: Category,
         as: 'categories',
@@ -64,11 +60,7 @@ const getBlogPostById = async (id) => {
       },
     ],
   });
-  
-  if (!blogPostById) {
-    return { statusNumber: 404, info: { message: "Post does not exist" } };
-  }
-
+  if (!blogPostById) return { statusNumber: 404, info: { message: 'Post does not exist' } };
   return { statusNumber: 200, info: blogPostById };
 };
 
