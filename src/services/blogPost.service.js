@@ -33,18 +33,17 @@ const getAllBlogPosts = async () => {
       {
         model: User,
         as: 'user',
-        attributes: { exclude: ['password']},
+        attributes: { exclude: ['password'] },
       },
       {
         model: Category,
         as: 'categories',
-        attributes: { exclude: ['PostCategory']},
-      }
+        attributes: { exclude: ['PostCategory'] },
+      },
     ],
   });
   return allBlogPosts;
 };
-
 
 module.exports = {
   postBlogPost,
