@@ -9,4 +9,6 @@ blogPostRouter.post(
   blogPostController.postBlogPost,
 );
 
+blogPostRouter.get('/post', md.tokenValidation, blogPostController.getAllBlogPosts);
+
 module.exports = blogPostRouter;

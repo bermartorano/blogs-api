@@ -1,4 +1,4 @@
-const { BlogPost, PostCategory, Category } = require('../models');
+const { BlogPost, PostCategory, Category, User } = require('../models');
 const { decodeToken } = require('../utils/auth');
 
 const postBlogPost = async (post, token) => {
@@ -26,6 +26,27 @@ const postBlogPost = async (post, token) => {
   return blogPostReturn;
 };
 
+const getAllBlogPosts = async () => {
+  const allBlogPosts = await BlogPost.findAll({
+    // include: [{ model: User, as: 'users' }, {model: Category, as: 'categories' }],
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password']},
+      },
+      {
+        model: Category,
+        as: 'categories',
+        attributes: { exclude: ['PostCategory']},
+      }
+    ],
+  });
+  return allBlogPosts;
+};
+
+
 module.exports = {
   postBlogPost,
+  getAllBlogPosts,
 };
