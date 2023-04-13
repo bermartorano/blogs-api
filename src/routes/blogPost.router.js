@@ -8,7 +8,7 @@ blogPostRouter.post(
   md.allFieldsPostBlogPost,
   blogPostController.postBlogPost,
 );
-
 blogPostRouter.get('/post', md.tokenValidation, blogPostController.getAllBlogPosts);
+blogPostRouter.get('/post/:id', md.tokenValidation, blogPostController.getBlogPostById);
 
 module.exports = blogPostRouter;

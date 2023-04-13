@@ -28,7 +28,6 @@ const postBlogPost = async (post, token) => {
 
 const getAllBlogPosts = async () => {
   const allBlogPosts = await BlogPost.findAll({
-    // include: [{ model: User, as: 'users' }, {model: Category, as: 'categories' }],
     include: [
       {
         model: User,
@@ -38,14 +37,43 @@ const getAllBlogPosts = async () => {
       {
         model: Category,
         as: 'categories',
-        attributes: { exclude: ['PostCategory'] },
+        through: {
+          attributes: [],
+        },
       },
     ],
   });
   return allBlogPosts;
 };
 
+const getBlogPostById = async (id) => {
+  const blogPostById = await BlogPost.findOne({
+    where: { id },
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  });
+  
+  if (!blogPostById) {
+    return { statusNumber: 404, info: { message: "Post does not exist" } };
+  }
+
+  return { statusNumber: 200, info: blogPostById };
+};
+
 module.exports = {
   postBlogPost,
   getAllBlogPosts,
+  getBlogPostById,
 };
