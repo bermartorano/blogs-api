@@ -64,8 +64,16 @@ const getBlogPostById = async (id) => {
   return { statusNumber: 200, info: blogPostById };
 };
 
+const updateBlogPost = async (post, id, token) => {
+  const { id: userId } = decodeToken(token);
+  const { title, content } = post;
+  if (userId !== +id) return { statusNumber: 401, info: { message: "Unauthorized user" } };
+  // PRECISO FAZER A REQ E RETORNAR ALGO COMO A LINA 50.
+};
+
 module.exports = {
   postBlogPost,
   getAllBlogPosts,
   getBlogPostById,
+  updateBlogPost,
 };
