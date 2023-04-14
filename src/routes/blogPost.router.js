@@ -10,6 +10,11 @@ blogPostRouter.post(
 );
 blogPostRouter.get('/post', md.tokenValidation, blogPostController.getAllBlogPosts);
 blogPostRouter.get('/post/:id', md.tokenValidation, blogPostController.getBlogPostById);
-blogPostRouter.put('/post/:id', md.tokenValidation, blogPostController.updateBlogPost);
+blogPostRouter.put(
+  '/post/:id',
+  md.tokenValidation,
+  md.allFieldsPutBlogPost,
+  blogPostController.updateBlogPost
+);
 
 module.exports = blogPostRouter;
