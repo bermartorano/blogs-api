@@ -14,7 +14,7 @@ blogPostRouter.put(
   '/post/:id',
   md.tokenValidation,
   md.allFieldsPutBlogPost,
-  blogPostController.updateBlogPost
+  blogPostController.updateBlogPost,
 );
 
 module.exports = blogPostRouter;

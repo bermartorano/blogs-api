@@ -67,8 +67,11 @@ const getBlogPostById = async (id) => {
 const updateBlogPost = async (post, id, token) => {
   const { id: userId } = decodeToken(token);
   const { title, content } = post;
-  if (userId !== +id) return { statusNumber: 401, info: { message: "Unauthorized user" } };
-  // PRECISO FAZER A REQ E RETORNAR ALGO COMO A LINA 50.
+  if (userId !== +id) return { statusNumber: 401, info: { message: 'Unauthorized user' } };
+  await BlogPost.upsert({ id: +id, title, content });
+  const updateResult = await getBlogPostById(id); 
+
+  return updateResult;
 };
 
 module.exports = {
