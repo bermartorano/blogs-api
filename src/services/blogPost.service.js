@@ -65,10 +65,10 @@ const getBlogPostById = async (id) => {
   return { statusNumber: 200, info: blogPostById };
 };
 
-const updateBlogPost = async (post, id, token) => {
-  const { id: userId } = decodeToken(token);
+const updateBlogPost = async (post, id, _token) => {
+  // const { id: userId } = decodeToken(token);
+  // if (userId !== +id) return { statusNumber: 401, info: { message: 'Unauthorized user' } };
   const { title, content } = post;
-  if (userId !== +id) return { statusNumber: 401, info: { message: 'Unauthorized user' } };
   await BlogPost.upsert({ id: +id, title, content });
   const updateResult = await getBlogPostById(id); 
 
