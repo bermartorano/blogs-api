@@ -19,8 +19,8 @@ blogPostRouter.put(
   '/post/:id',
   md.tokenValidation,
   md.allFieldsPutBlogPost,
-  md.sameUser,
   blogPostController.updateBlogPost,
 );
+blogPostRouter.delete('/post/:id', md.tokenValidation, md.sameUser, blogPostController.deletePost);
 
 module.exports = blogPostRouter;

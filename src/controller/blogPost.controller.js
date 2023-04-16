@@ -49,10 +49,22 @@ const searchBlogPost = async (req, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  try {
+    const { params: { id: blogPostId } } = req;
+    const { statusNumber } = await postService.deletePost(blogPostId);
+    console.log('********** STATUS NUMBER: ', statusNumber);
+    return res.status(statusNumber).json();
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   postBlogPost,
   getAllBlogPosts,
   getBlogPostById,
   updateBlogPost,
   searchBlogPost,
+  deletePost,
 };
