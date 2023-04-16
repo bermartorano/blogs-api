@@ -39,9 +39,20 @@ const updateBlogPost = async (req, res) => {
   }
 };
 
+const searchBlogPost = async (req, res) => {
+  try {
+    const { query: { q: query } } = req;
+    const { statusNumber, info } = await postService.searchBlogPost(query);
+    return res.status(statusNumber).json(info);
+  } catch (error) { 
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   postBlogPost,
   getAllBlogPosts,
   getBlogPostById,
   updateBlogPost,
+  searchBlogPost,
 };

@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, PostCategory, Category, User } = require('../models');
 const { decodeToken } = require('../utils/auth');
 
@@ -74,9 +75,30 @@ const updateBlogPost = async (post, id, token) => {
   return updateResult;
 };
 
+const searchBlogPost = async (search) => {
+  const searchResult = await BlogPost.findAll({
+    where: {
+      [Op.or]: [
+        { title: { [Op.like]: `%${search}%` } },
+        { content: { [Op.like]: `%${search}%` } },
+      ],
+    },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+    ],
+  });
+  return { statusNumber: 200, info: searchResult };
+};
+
 module.exports = {
   postBlogPost,
   getAllBlogPosts,
   getBlogPostById,
   updateBlogPost,
+  searchBlogPost,
 };

@@ -8,6 +8,11 @@ blogPostRouter.post(
   md.allFieldsPostBlogPost,
   blogPostController.postBlogPost,
 );
+blogPostRouter.get(
+  '/post/search',
+  md.tokenValidation,
+  blogPostController.searchBlogPost,
+);
 blogPostRouter.get('/post', md.tokenValidation, blogPostController.getAllBlogPosts);
 blogPostRouter.get('/post/:id', md.tokenValidation, blogPostController.getBlogPostById);
 blogPostRouter.put(
