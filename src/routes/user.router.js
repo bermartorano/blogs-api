@@ -11,5 +11,6 @@ userRouter.post(
   );
 userRouter.get('/user', md.tokenValidation, userController.getAllUsers);
 userRouter.get('/user/:id', md.tokenValidation, userController.getOneUser);
+userRouter.delete('/user/me', md.tokenValidation, userController.userAutoDelete);
 
 module.exports = userRouter;

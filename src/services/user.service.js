@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { newToken } = require('../utils/auth');
+const { newToken, decodeToken } = require('../utils/auth');
 const deletePassword = require('../utils/deletePassword');
 
 const postUser = async (user) => {
@@ -26,8 +26,15 @@ const getOneUser = async (id) => {
   return { status: 200, info: deletePassword(user.dataValues) };
 };
 
+const userAutoDelete = async (token) => {
+  const { id: userId } = decodeToken(token);
+  await User.destroy({ where: { id: userId } });
+  return { statusNumber: 204 };
+};
+
 module.exports = {
   postUser,
   getAllUsers,
   getOneUser,
+  userAutoDelete,
 };

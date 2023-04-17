@@ -32,8 +32,19 @@ const getOneUser = async (req, res) => {
   }
 };
 
+const userAutoDelete = async (req, res) => {
+  try {
+    const { headers: { authorization: token } } = req;
+    const { statusNumber } = await userServices.userAutoDelete(token);
+    return res.status(statusNumber).json();
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   postUser,
   getAllUsers,
   getOneUser,
+  userAutoDelete,
 };
