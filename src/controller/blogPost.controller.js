@@ -51,10 +51,9 @@ const searchBlogPost = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const { params: { id: blogPostId } } = req;
-    const { statusNumber } = await postService.deletePost(blogPostId);
-    console.log('********** STATUS NUMBER: ', statusNumber);
-    return res.status(statusNumber).json();
+    const { params: { id: blogPostId }, headers: { authorization } } = req;
+    const { statusNumber, info } = await postService.deletePost(blogPostId, authorization);
+    return res.status(statusNumber).json(info);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

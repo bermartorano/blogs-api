@@ -79,17 +79,6 @@ const allFieldsPutBlogPost = (req, res, next) => {
   return next();
 };
 
-const sameUser = (req, res, next) => {
-  const { params: { id: blogPostId }, headers: { authorization: token } } = req;
-  const { id: userId } = auth.decodeToken(token);
-  console.log('*************USER ID: ', userId);
-  console.log('*************BLOG POST ID ID: ', blogPostId);
-  if (userId !== +blogPostId) {
-    return res.status(401).json({ message: 'Unauthorized user' });
-  }
-  return next();
-};
-
 module.exports = {
   allFields,
   displayNameSize,
@@ -99,5 +88,4 @@ module.exports = {
   validateName,
   allFieldsPostBlogPost,
   allFieldsPutBlogPost,
-  sameUser,
 };

@@ -67,7 +67,14 @@ const getBlogPostById = async (id) => {
 
 const sameUserChecker = async (blogPostId, token) => {
   const { id: userId } = decodeToken(token);
-  const { info } = await getBlogPostById(blogPostId);
+  const { statusNumber, info } = await getBlogPostById(blogPostId);
+  if (statusNumber === 404) {
+    const result = {
+      itIsTheOwner: false,
+      response: { statusNumber: 404, info: { message: 'Post does not exist' } },
+    };
+    return result;
+  }
   const result = {
     itIsTheOwner: userId === info.dataValues.userId,
     response: { statusNumber: 401, info: { message: 'Unauthorized user' } },
@@ -76,11 +83,6 @@ const sameUserChecker = async (blogPostId, token) => {
 };
 
 const updateBlogPost = async (post, blogPostId, token) => {
-  // const { id: userId } = decodeToken(token);
-  // const { info } = await getBlogPostById(blogPostId);
-  // if (userId !== info.dataValues.userId) {
-  //   return { statusNumber: 401, info: { message: 'Unauthorized user' } };
-  // }
   const { itIsTheOwner, response } = await sameUserChecker(blogPostId, token);
   if (!itIsTheOwner) {
     return response;
@@ -111,12 +113,15 @@ const searchBlogPost = async (search) => {
   return { statusNumber: 200, info: searchResult };
 };
 
-const deletePost = async (blogPostId) => {
-  const deletedPostReturn = await BlogPost.destroy({
+const deletePost = async (blogPostId, token) => {
+  const { itIsTheOwner, response } = await sameUserChecker(blogPostId, token);
+  if (!itIsTheOwner) {
+    return response;
+  }
+  await BlogPost.destroy({
     where: { id: blogPostId },
   });
-  console.log('********* RETORNO DO POST DELETADO: ', deletedPostReturn.dataValues);
-  return { statusNumber: 204 };
+  return { statusNumber: 204, info: null };
 };
 
 module.exports = {
